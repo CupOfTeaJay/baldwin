@@ -24,8 +24,7 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules:  MyLib
-                      OtherLib
+    exposed-modules:  Linear
 
     -- Modules included in this library but not exported.
     -- other-modules:

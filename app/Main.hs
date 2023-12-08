@@ -1,8 +1,12 @@
 module Main where
 
-import qualified MyLib (someFunc)
+import qualified Linear
 
 main :: IO ()
 main = do
-  putStrLn "Hello, Haskell!"
-  MyLib.someFunc
+
+  let matrixA = [[1, 3, 5]]
+  let matrixB = [[2, 4, 6]]
+
+  putStrLn "Adding to matrices..."
+  print (Linear.addMatrices matrixA matrixB)
