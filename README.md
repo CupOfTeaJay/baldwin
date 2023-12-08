@@ -1,6 +1,6 @@
 # Baldwin
 
-**What is Baldwin?**:
+**What is Baldwin?**
 - Baldwin is an attempt to make a machine learning library with the 
 functional programming language *Haskell*.
 
