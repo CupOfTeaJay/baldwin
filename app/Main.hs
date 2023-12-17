@@ -9,4 +9,4 @@ main = do
   let matrixB = [[2, 4, 6]]
 
   putStrLn "Adding to matrices..."
-  print (Linear.addMatrices matrixA matrixB)
+  print (Linear.addMat matrixA matrixB)
