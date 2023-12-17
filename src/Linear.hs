@@ -2,16 +2,23 @@ module Linear where
 
 type Matrix dataType = [[dataType]]
 
-addMatrices :: Num dataType =>
+addMat :: Num dataType =>
     Matrix dataType ->
     Matrix dataType ->
     Matrix dataType
-addMatrices matrixA matrixB = 
-    zipWith(zipWith (+)) matrixA matrixB
+addMat matA matB = 
+    zipWith(zipWith (+)) matA matB
 
-scaleMatrix :: Num dataType =>
+multMat :: Num dataType =>
+    Matrix dataType ->
+    Matrix dataType ->
+    Matrix dataType
+multMat matA matB =
+
+scaleMat :: Num dataType =>
            dataType ->
     Matrix dataType ->
     Matrix dataType
-scaleMatrix scalar matrix =
-    map(map(scalar*)) matrix
+scaleMat scalar mat =
+    map(map(scalar*)) mat
+    
