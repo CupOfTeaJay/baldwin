@@ -2,29 +2,29 @@ module Linear where
 
 type Matrix dataType = [[dataType]]
 
-addMat :: Num dataType =>
+matSum :: Num dataType =>
     Matrix dataType ->
     Matrix dataType ->
     Matrix dataType
-addMat matA matB = 
+matSum matA matB = 
     zipWith(zipWith (+)) matA matB
 
-multMat :: Num dataType =>
+matMul :: Num dataType =>
     Matrix dataType ->
     Matrix dataType ->
     Matrix dataType
-multMat matA matB = 
-    map(\row -> map(\col -> sum(zipWith(*) row col)) (transposeMat matB)) matA
+matMul matA matB = 
+    map(\row -> map(\col -> sum(zipWith(*) row col)) (matTrans matB)) matA
 
-scaleMat :: Num dataType =>
+matScale :: Num dataType =>
            dataType ->
     Matrix dataType ->
     Matrix dataType
-scaleMat scalar mat = 
+matScale scalar mat = 
     map(map(scalar*)) mat
     
-transposeMat :: Num dataType =>
+matTrans :: Num dataType =>
     Matrix dataType ->
     Matrix dataType
-transposeMat mat = 
+matTrans mat = 
     foldr(zipWith(:)) (repeat []) mat

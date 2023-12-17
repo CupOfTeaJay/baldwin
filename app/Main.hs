@@ -14,7 +14,7 @@ main = do
                    [3, 5, 7]]
 
     putStrLn "Adding to matrices..."
-    print (Linear.addMat matrixA matrixB)
+    print (Linear.matSum matrixA matrixB)
 
     putStrLn "Transposing a matrix..."
-    print (Linear.transposeMat matrixB)
+    print (Linear.matTrans matrixB)
