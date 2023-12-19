@@ -24,13 +24,14 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules:  Linear
+    exposed-modules:  Neural
 
     -- Modules included in this library but not exported.
     -- other-modules:
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
+
     build-depends:    base ^>=4.17.2.0,
                       directory
     hs-source-dirs:   src
@@ -44,6 +45,7 @@ executable baldwin
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
+
     build-depends:
         base ^>=4.17.2.0,
         baldwin
