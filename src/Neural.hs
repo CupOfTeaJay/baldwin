@@ -1,6 +1,6 @@
 module Neural where
 
-import qualified Data.Matrix as Matrix
-import qualified Data.Vector as Vector
+import Linear
 
-data Layer = DenseLayer {weights :: Matrix Float, biases :: Vector Float}
+data Layer = DenseLayer {weights :: Linear.Matrix Float, 
+                         biases :: Linear.Vector Float}
