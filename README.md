@@ -6,7 +6,7 @@ functional programming language *Haskell*.
 
 **Why**
 - The reason for undertaking a project like this is two-fold:
-    - To understand what *machine learning* really even means.
+    - To understand what *machine learning* really even means, including popular algorithms and neural networks.
     - To learn about the *functional programming* paradigm.
 
 **Method**
