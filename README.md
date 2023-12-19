@@ -17,6 +17,7 @@ algorithms right away, but I imagine it would be much more rewarding to build
 this from the ground up.
 
 **Inspiration**
+- [Analog Computing](https://www.youtube.com/watch?v=GVsUOuSjvcg)
 - [TinyGrad](https://github.com/tinygrad/tinygrad)
 - [Haskell is Useless](https://www.youtube.com/watch?v=iSmkqocn0oQ)
 - [Neural Network from Scratch](https://www.youtube.com/watch?v=w8yWXqWQYmU&t)
