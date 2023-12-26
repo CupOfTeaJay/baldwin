@@ -22,7 +22,7 @@ matSum :: Num dataType =>
     Matrix dataType ->
     Matrix dataType
 matSum matA matB = 
-    zipWith(zipWith (+)) matA matB
+    zipWith(zipWith(+)) matA matB
     
 matTrans :: Num dataType =>
     Matrix dataType ->
@@ -36,3 +36,10 @@ matVecMul :: Num dataType =>
     Vector dataType
 matVecMul mat vec =
     map(\row -> sum(zipWith(*) row vec)) mat
+
+vecSum :: Num dataType =>
+    Vector dataType ->
+    Vector dataType ->
+    Vector dataType
+vecSum vecA vecB =
+    zipWith(+) vecA vecB
