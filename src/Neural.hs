@@ -2,12 +2,12 @@ module Neural where
 
 import Linear
 
-data DenseLayer = DenseLayer {weights :: Linear.Matrix Float, 
-                              biases :: Linear.Vector Float}
+data DenseLayer dataType = DenseLayer {weights :: Linear.Matrix dataType, 
+                                       biases :: Linear.Vector dataType}
 
-calcLayer ::
-    Linear.Vector Float ->
-    DenseLayer ->
-    Linear.Vector Float
+calcLayer :: Num dataType =>
+    Linear.Vector dataType ->
+    DenseLayer dataType ->
+    Linear.Vector dataType
 calcLayer ingress layer =
     Linear.vecSum (Linear.matVecMul (weights layer) ingress) (biases layer)
