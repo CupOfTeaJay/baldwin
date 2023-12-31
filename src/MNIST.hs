@@ -6,20 +6,20 @@ parentDir :: String
 parentDir = 
     "../_datasets/MNIST/"
 
-trainImages :: String
-trainImages =
+trainImagesPath :: String
+trainImagesPath =
     parentDir ++ "train-images-idx3-ubyte"
 
-trainLabels :: String
-trainLabels = 
+trainLabelsPath :: String
+trainLabelsPath = 
     parentDir ++ "train-labels-idx1-ubyte"
 
-testImages :: String
-testImages = 
+testImagesPath :: String
+testImagesPath = 
     parentDir ++ "t10k-images-idx3-ubyte"
 
-testLabels :: String
-testLabels =
+testLabelsPath :: String
+testLabelsPath =
     parentDir ++ "t10k-labels-idx1-ubyte"
 
 loadTrainData :: IO (String, String)
