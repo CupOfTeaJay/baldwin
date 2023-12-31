@@ -1,5 +1,6 @@
 module MNIST where
 
+import qualified Data.ByteString as BS
 import Linear
 
 parentDir :: String
@@ -22,8 +23,8 @@ testLabelsPath :: String
 testLabelsPath =
     parentDir ++ "t10k-labels-idx1-ubyte"
 
-loadTrainData :: IO (String, String)
+loadTrainData :: IO (BS.ByteString, BS.ByteString)
 loadTrainData = do
-    images <- readFile trainImagesPath
-    labels <- readFile trainLabelsPath
+    images <- BS.readFile trainImagesPath
+    labels <- BS.readFile trainLabelsPath
     return (images, labels)
