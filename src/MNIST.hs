@@ -24,6 +24,6 @@ testLabelsPath =
 
 loadTrainData :: IO (String, String)
 loadTrainData = do
-    images <- readFile trainImages
-    labels <- readFile trainLabels
+    images <- readFile trainImagesPath
+    labels <- readFile trainLabelsPath
     return (images, labels)
