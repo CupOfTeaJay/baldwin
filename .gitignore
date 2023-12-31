@@ -1,5 +1,7 @@
 _notebooks/.ipynb_checkpoints/
 dist-newstyle/
+.dyn_hi
+.dyn_o
 .exe
 .hi
 .o
