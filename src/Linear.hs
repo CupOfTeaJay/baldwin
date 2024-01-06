@@ -2,6 +2,7 @@ module Linear where
 
 type Vector dataType = [dataType]
 type Matrix dataType = [Vector dataType]
+type Tensor dataType = [Matrix dataType]
 
 matMul :: Num dataType
     => Matrix dataType
@@ -43,12 +44,3 @@ vecSum :: Num dataType
     -> Vector dataType
 vecSum vecA vecB =
     zipWith(+) vecA vecB
-
-vecToMat :: Num dataType
-    => Int
-    -> Vector dataType
-    -> Matrix dataType
-vecToMat chunkSize [] = []
-vecTomat chunkSize vec
-  | chunkSize > 0 = take chunkSize vec : vecToMat chunkSize (drop chunkSize vec)
-  | otherwise = error "Please enter a positive integer for the first argument."

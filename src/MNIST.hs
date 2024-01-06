@@ -1,6 +1,7 @@
 module MNIST where
 
 import qualified Data.ByteString as BS
+import Data.List.Split (chunksOf)
 import Data.Word (Word8)
 import Linear
 
@@ -29,6 +30,17 @@ imageHeaderSize = 16
 
 labelHeaderSize :: Int
 labelHeaderSize = 8
+
+imageWidth :: Int
+imageWidth = 28
+
+pixelsPerImage :: Int
+pixelsPerImage = imageWidth*imageWidth
+
+-- formatImageData :: Linear.Vector Word8
+--     -> Linear.Tensor Word8
+-- formatImageData vec =
+--     chunksOf imageWidth chunksOf(pixelsPerImage vec)
 
 loadTrainData :: IO (Linear.Vector Word8, Linear.Vector Word8)
 loadTrainData = do
