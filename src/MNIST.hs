@@ -1,6 +1,7 @@
 module MNIST where
 
 import qualified Data.ByteString as BS
+import Data.Word (Word8)
 import Linear
 
 parentDir :: String
@@ -23,8 +24,18 @@ testLabelsPath :: String
 testLabelsPath =
     parentDir ++ "t10k-labels-idx1-ubyte"
 
-loadTrainData :: IO (BS.ByteString, BS.ByteString)
+loadTrainData :: IO (Linear.Vector Word8, Linear.Vector Word8)
 loadTrainData = do
-    images <- BS.readFile trainImagesPath
-    labels <- BS.readFile trainLabelsPath
-    return (images, labels)
+    rawImages <- BS.readFile trainImagesPath
+    rawLabels <- BS.readFile trainLabelsPath
+    let hexImages = BS.unpack rawImages
+    let hexLabels = BS.unpack rawLabels
+    return (hexImages, hexLabels)
+
+loadTestData :: IO (Linear.Vector Word8, Linear.Vector Word8)
+loadTestData = do
+    rawImages <- BS.readFile testImagesPath
+    rawLabels <- BS.readFile testLabelsPath
+    let hexImages = BS.unpack rawImages
+    let hexLabels = BS.unpack rawLabels
+    return (hexImages, hexLabels)
