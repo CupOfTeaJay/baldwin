@@ -2,7 +2,6 @@ module Linear where
 
 type Vector dataType = [dataType]
 type Matrix dataType = [Vector dataType]
-type Tensor dataType = [Matrix dataType]
 
 matMul :: Num dataType
     => Matrix dataType
