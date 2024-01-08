@@ -1,7 +1,7 @@
 module MNIST where
 
 import qualified Data.ByteString as BS
-import Data.List.Split (chunksOf)
+import qualified Data.List.Split as SPL
 import Data.Word (Word8)
 import Linear
 
@@ -38,9 +38,9 @@ pixelsPerImage :: Int
 pixelsPerImage = imageWidth*imageWidth
 
 formatImageData :: Linear.Vector Word8
-    -> Linear.Vector(Linear.Matrix Word8)
+    -> Linear.Matrix Word8
 formatImageData vec =
-    map(chunksOf imageWidth) (chunksOf pixelsPerImage vec)
+    SPL.chunksOf pixelsPerImage vec
 
 loadTrainData :: IO (Linear.Vector(Linear.Matrix Word8), Linear.Vector Word8)
 loadTrainData = do

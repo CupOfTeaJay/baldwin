@@ -51,7 +51,7 @@ executable baldwin
 
     build-depends:
         base ^>=4.17.2.0,
-        baldwin
+        baldwin,
 
     hs-source-dirs:   app
     default-language: Haskell2010
