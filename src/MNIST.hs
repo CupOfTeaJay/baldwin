@@ -22,28 +22,28 @@ import Linear
 -}
 trainImagesFile :: String
 trainImagesFile =
-    "train-images-idx3-ubyte"
+    "/train-images-idx3-ubyte"
 
 {-
     Filename for MNIST training label data.
 -}
 trainLabelsFile :: String
 trainLabelsFile = 
-    "train-labels-idx1-ubyte"
+    "/train-labels-idx1-ubyte"
 
 {-
     Filename for MNIST test image data.
 -}
 testImagesFile :: String
 testImagesFile = 
-    "t10k-images-idx3-ubyte"
+    "/t10k-images-idx3-ubyte"
 
 {-
     Filename for MNIST test label data.
 -}
 testLabelsFile :: String
 testLabelsFile =
-    "t10k-labels-idx1-ubyte"
+    "/t10k-labels-idx1-ubyte"
 
 {-
     Header size for MNIST image data in bytes.
