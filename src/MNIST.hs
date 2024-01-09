@@ -42,7 +42,7 @@ formatImageData :: Linear.Vector Word8
 formatImageData vec =
     SPL.chunksOf pixelsPerImage vec
 
-loadTrainData :: IO (Linear.Vector(Linear.Matrix Word8), Linear.Vector Word8)
+loadTrainData :: IO (Linear.Matrix Word8, Linear.Vector Word8)
 loadTrainData = do
     rawImages <- BS.readFile trainImagesPath
     rawLabels <- BS.readFile trainLabelsPath
@@ -50,7 +50,7 @@ loadTrainData = do
     let hexLabels = BS.unpack(BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
 
-loadTestData :: IO (Linear.Vector(Linear.Matrix Word8), Linear.Vector Word8)
+loadTestData :: IO (Linear.Matrix Word8, Linear.Vector Word8)
 loadTestData = do
     rawImages <- BS.readFile testImagesPath
     rawLabels <- BS.readFile testLabelsPath
