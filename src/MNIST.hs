@@ -18,39 +18,32 @@ import Data.Word (Word8)
 import Linear
 
 {-
-    Parent directory of the MNIST dataset.
+    Filename for MNIST training image data.
 -}
-parentDir :: String
-parentDir = 
-    "_datasets/MNIST/"
+trainImagesFile :: String
+trainImagesFile =
+    "train-images-idx3-ubyte"
 
 {-
-    Filepath for MNIST training image data.
+    Filename for MNIST training label data.
 -}
-trainImagesPath :: String
-trainImagesPath =
-    parentDir ++ "train-images-idx3-ubyte"
+trainLabelsFile :: String
+trainLabelsFile = 
+    "train-labels-idx1-ubyte"
 
 {-
-    Filepath for MNIST training label data.
+    Filename for MNIST test image data.
 -}
-trainLabelsPath :: String
-trainLabelsPath = 
-    parentDir ++ "train-labels-idx1-ubyte"
+testImagesFile :: String
+testImagesFile = 
+    "t10k-images-idx3-ubyte"
 
 {-
-    Filepath for MNIST test image data.
+    Filename for MNIST test label data.
 -}
-testImagesPath :: String
-testImagesPath = 
-    parentDir ++ "t10k-images-idx3-ubyte"
-
-{-
-    Filepath for MNIST test label data.
--}
-testLabelsPath :: String
-testLabelsPath =
-    parentDir ++ "t10k-labels-idx1-ubyte"
+testLabelsFile :: String
+testLabelsFile =
+    "t10k-labels-idx1-ubyte"
 
 {-
     Header size for MNIST image data in bytes.
@@ -90,10 +83,11 @@ formatImageData vec =
     Reads the training data from baldwin/_datasets/MNIST and returns a tuple
     containing the training images and their corresponding labels.
 -}
-loadTrainData :: IO (Linear.Matrix Word8, Linear.Vector Word8)
-loadTrainData = do
-    rawImages <- BS.readFile trainImagesPath
-    rawLabels <- BS.readFile trainLabelsPath
+loadTrainData :: String
+    -> IO (Linear.Matrix Word8, Linear.Vector Word8)
+loadTrainData filepath = do
+    rawImages <- BS.readFile (filepath ++ trainImagesFile)
+    rawLabels <- BS.readFile (filepath ++ trainLabelsFile)
     let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
     let hexLabels = BS.unpack(BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
@@ -102,10 +96,11 @@ loadTrainData = do
     Reads the test data from baldwin/_datasets/MNIST and returns a tuple
     containing the test images and their corresponding labels.
 -}
-loadTestData :: IO (Linear.Matrix Word8, Linear.Vector Word8)
-loadTestData = do
-    rawImages <- BS.readFile testImagesPath
-    rawLabels <- BS.readFile testLabelsPath
+loadTestData :: String
+    -> IO (Linear.Matrix Word8, Linear.Vector Word8)
+loadTestData filepath = do
+    rawImages <- BS.readFile (filepath ++ testImagesFile)
+    rawLabels <- BS.readFile (filepath ++ testLabelsFile)
     let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
     let hexLabels = BS.unpack(BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
