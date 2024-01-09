@@ -22,7 +22,7 @@ import Linear
 -}
 parentDir :: String
 parentDir = 
-    "../_datasets/MNIST/"
+    "_datasets/MNIST/"
 
 {-
     Filepath for MNIST training image data.
@@ -87,7 +87,7 @@ formatImageData vec =
     SPL.chunksOf pixelsPerImage vec
 
 {-
-    Reads the training data from ../_datasets/MNIST and returns a tuple
+    Reads the training data from baldwin/_datasets/MNIST and returns a tuple
     containing the training images and their corresponding labels.
 -}
 loadTrainData :: IO (Linear.Matrix Word8, Linear.Vector Word8)
@@ -99,7 +99,7 @@ loadTrainData = do
     return (hexImages, hexLabels)
 
 {-
-    Reads the test data from ../_datasets/MNIST and returns a tuple
+    Reads the test data from baldwin/_datasets/MNIST and returns a tuple
     containing the test images and their corresponding labels.
 -}
 loadTestData :: IO (Linear.Matrix Word8, Linear.Vector Word8)
@@ -109,3 +109,23 @@ loadTestData = do
     let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
     let hexLabels = BS.unpack(BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
+
+{-
+    Converts a pixel value (0-255) to a character. This can be used to crudely
+    display the images to confirm the data has been loaded correctly.
+-}
+pixelToChar :: Word8 -> Char
+pixelToChar pixel
+    | pixel == 0 = ' '
+    | otherwise  = '*'
+
+{-
+    Roughly displays an MNIST image with its corresponding label.
+-}
+displayData :: Linear.Matrix Word8
+    -> Linear.Vector Word8
+    -> Int
+    -> IO ()
+displayData imageData labelData index = do
+    putStrLn $ "Label: " ++ show (labelData!!index)
+    mapM_ putStrLn $ SPL.chunksOf imageWidth (map pixelToChar (imageData!!index))
