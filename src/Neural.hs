@@ -12,7 +12,9 @@ import Linear
 {-
     TODO: document.
 -}
-data DenseLayer dataType = DenseLayer {weights :: Linear.Matrix dataType,
+data DenseLayer dataType = DenseLayer {inputFeatures :: Int ,
+                                       outputFeatures :: Int,
+                                       weights :: Linear.Matrix dataType,
                                        biases :: Linear.Vector dataType}
 
 {-
@@ -22,7 +24,7 @@ data FullyConnected dataType = FullyConnected {layers :: [DenseLayer dataType]}
 
 ---------- ACTIVATION FUNCTIONS ----------
 
-binaryStep :: (Num dataType, Ord dataType)
+binaryStep :: (Floating dataType, Ord dataType)
     => dataType
     -> dataType
 binaryStep x
@@ -41,10 +43,37 @@ gaussian :: Floating dataType
 gaussian x =
     exp(-x^2)
 
+------------- LOSS FUNCTIONS -------------
+
+-- meanSquared :: Floating dataType
+--     => Linear.Vector dataType
+--     -> Linear.Vector dataType
+--     -> dataType
+-- meanSquared actual expected =
+--     Linear.vecSub actual expected
+
+------------------------------------------
+
+-- initBiases :: Floating dataType
+--     => Int
+--     -> Linear.Vector dataType
+-- initBiases dims =
+
+-- initWeights :: Floating dataType
+--     => Int
+--     -> Linear.Matrix dataType
+-- initWeights dims =
+
+-- initDenseLayer :: Floating dataType
+--     => Int
+--     -> Int
+--     -> DenseLayer dataType
+-- initDenseLayer inFeat outFeat =
+
 {-
     TODO: document.
 -}
-calcLayer :: Num dataType
+calcLayer :: Floating dataType
     => Linear.Vector dataType
     -> DenseLayer    dataType
     -> Linear.Vector dataType
