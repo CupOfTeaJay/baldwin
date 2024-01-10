@@ -20,6 +20,27 @@ data DenseLayer dataType = DenseLayer {weights :: Linear.Matrix dataType,
 -}
 data FullyConnected dataType = FullyConnected {layers :: [DenseLayer dataType]}
 
+---------- ACTIVATION FUNCTIONS ----------
+
+binaryStep :: (Num dataType, Ord dataType)
+    => dataType
+    -> dataType
+binaryStep x
+    | x < 0     = 0
+    | otherwise = 1
+
+sigmoid :: Floating dataType
+    => dataType
+    -> dataType
+sigmoid x = 
+    1 / (1 + exp(-x))
+
+gaussian :: Floating dataType
+    => dataType
+    -> dataType
+gaussian x =
+    exp(-x^2)
+
 {-
     TODO: document.
 -}
