@@ -20,7 +20,7 @@ type Matrix dataType = [Vector dataType]
 {-
     Multiplies two matrices together.
 -}
-matMul :: Num dataType
+matMul :: Floating dataType
     => Matrix dataType
     -> Matrix dataType
     -> Matrix dataType
@@ -30,7 +30,7 @@ matMul matA matB =
 {-
     Multiplies a matrix by a scalar.
 -}
-matScale :: Num dataType
+matScale :: Floating dataType
     =>        dataType
     -> Matrix dataType
     -> Matrix dataType
@@ -40,7 +40,7 @@ matScale scalar mat =
 {-
     Adds two matrices together.
 -}
-matSum :: Num dataType
+matSum :: Floating dataType
     => Matrix dataType
     -> Matrix dataType
     -> Matrix dataType
@@ -50,7 +50,7 @@ matSum matA matB =
 {-
     Transposes a matrix.
 -}
-matTrans :: Num dataType
+matTrans :: Floating dataType
     => Matrix dataType
     -> Matrix dataType
 matTrans mat = 
@@ -59,7 +59,7 @@ matTrans mat =
 {-
     Multiplies a matrix by a vector.
 -}
-matVecMul :: Num dataType
+matVecMul :: Floating dataType
     => Matrix dataType
     -> Vector dataType
     -> Vector dataType
@@ -69,7 +69,7 @@ matVecMul mat vec =
 {-
     Adds two vectors together.
 -}
-vecSum :: Num dataType
+vecSum :: Floating dataType
     => Vector dataType
     -> Vector dataType
     -> Vector dataType
@@ -79,7 +79,7 @@ vecSum vecA vecB =
 {-
     Dot product of two vectors.
 -}
-vecDot :: Num dataType
+vecDot :: Floating dataType
     => Vector dataType
     -> Vector dataType
     -> dataType
