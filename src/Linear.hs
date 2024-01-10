@@ -75,3 +75,13 @@ vecSum :: Num dataType
     -> Vector dataType
 vecSum vecA vecB =
     zipWith(+) vecA vecB
+
+{-
+    Dot product of two vectors.
+-}
+vecDot :: Num dataType
+    => Vector dataType
+    -> Vector dataType
+    -> dataType
+vecDot vecA vecB =
+    sum(zipWith(*) vecA vecB)
