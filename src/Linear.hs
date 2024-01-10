@@ -77,6 +77,16 @@ vecSum vecA vecB =
     zipWith(+) vecA vecB
 
 {-
+    Subtracts one vector from another.
+-}
+vecSub :: Floating dataType
+    => Vector dataType
+    -> Vector dataType
+    -> Vector dataType
+vecSub vecA vecB =
+    zipWith(-) vecA vecB
+
+{-
     Dot product of two vectors.
 -}
 vecDot :: Floating dataType
