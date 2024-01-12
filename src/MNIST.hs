@@ -10,26 +10,38 @@
     < https://www.kaggle.com/datasets/hojjatk/mnist-dataset >
 -}
 
-module MNIST where
+module MNIST (loadTrainData, 
+              loadTestData, 
+              displayData) where
 
-import qualified Data.ByteString as BS
 import qualified Data.List.Split as SPL
+import qualified Data.ByteString as BS
 import Data.Word (Word8)
 import Linear
 
 {-
-    Filename for MNIST training image data.
+    Header size for MNIST image data in bytes.
 -}
-trainImagesFile :: String
-trainImagesFile =
-    "/train-images-idx3-ubyte"
+imageHeaderSize :: Int
+imageHeaderSize = 16
 
 {-
-    Filename for MNIST training label data.
+    Width of MNIST images in pixels.
 -}
-trainLabelsFile :: String
-trainLabelsFile = 
-    "/train-labels-idx1-ubyte"
+imageWidth :: Int
+imageWidth = 28
+
+{-
+    Header size for MNIST label data in bytes.
+-}
+labelHeaderSize :: Int
+labelHeaderSize = 8
+
+{-
+    Total number of pixels in an MNIST image.
+-}
+pixelsPerImage :: Int
+pixelsPerImage = imageWidth*imageWidth
 
 {-
     Filename for MNIST test image data.
@@ -39,6 +51,13 @@ testImagesFile =
     "/t10k-images-idx3-ubyte"
 
 {-
+    Filename for MNIST training image data.
+-}
+trainImagesFile :: String
+trainImagesFile =
+    "/train-images-idx3-ubyte"
+
+{-
     Filename for MNIST test label data.
 -}
 testLabelsFile :: String
@@ -46,28 +65,22 @@ testLabelsFile =
     "/t10k-labels-idx1-ubyte"
 
 {-
-    Header size for MNIST image data in bytes.
+    Filename for MNIST training label data.
 -}
-imageHeaderSize :: Int
-imageHeaderSize = 16
+trainLabelsFile :: String
+trainLabelsFile = 
+    "/train-labels-idx1-ubyte"
 
 {-
-    Header size for MNIST label data in bytes.
+    Roughly displays an MNIST image with its corresponding label.
 -}
-labelHeaderSize :: Int
-labelHeaderSize = 8
-
-{-
-    Width of MNIST images in pixels.
--}
-imageWidth :: Int
-imageWidth = 28
-
-{-
-    Total number of pixels in an MNIST image.
--}
-pixelsPerImage :: Int
-pixelsPerImage = imageWidth*imageWidth
+displayData :: Linear.Matrix Word8
+    -> Linear.Vector Word8
+    -> Int
+    -> IO ()
+displayData imageData labelData index = do
+    putStrLn $ "Label: " ++ show (labelData!!index)
+    mapM_ putStrLn $ SPL.chunksOf imageWidth (map pixelToChar (imageData!!index))
 
 {-
     Splits the raw image data (a list of bytes) into a list of lists. Each
@@ -113,14 +126,3 @@ pixelToChar :: Word8 -> Char
 pixelToChar pixel
     | pixel == 0 = ' '
     | otherwise  = '*'
-
-{-
-    Roughly displays an MNIST image with its corresponding label.
--}
-displayData :: Linear.Matrix Word8
-    -> Linear.Vector Word8
-    -> Int
-    -> IO ()
-displayData imageData labelData index = do
-    putStrLn $ "Label: " ++ show (labelData!!index)
-    mapM_ putStrLn $ SPL.chunksOf imageWidth (map pixelToChar (imageData!!index))
