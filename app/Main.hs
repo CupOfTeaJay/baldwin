@@ -5,5 +5,9 @@ import qualified Layer
 
 main :: IO ()
 main = do
-    let exampleDenseLayer = Layer.init 3 2 ActFuncs.sigmoid :: Layer.DenseLayer
+    -- This does not do anything yet. Conceptual structure of network so far.
+    let inputLayer = Layer.init 784 16 ActFuncs.sigmoid :: Layer.DenseLayer
+    let hidden0    = Layer.init 16 16  ActFuncs.sigmoid :: Layer.DenseLayer
+    let hidden1    = Layer.init 16 16  ActFuncs.sigmoid :: Layer.DenseLayer
+    let output     = Layer.init 16 10  ActFuncs.sigmoid :: Layer.DenseLayer
     putStrLn "Hello, Haskell!"
