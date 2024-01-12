@@ -67,14 +67,14 @@ matVecMul mat vec =
     map(\row -> sum(zipWith(*) row vec)) mat
 
 {-
-    Adds two vectors together.
+    Dot product of two vectors.
 -}
-vecSum :: Floating dataType
+vecDot :: Floating dataType
     => Vector dataType
     -> Vector dataType
-    -> Vector dataType
-vecSum vecA vecB =
-    zipWith(+) vecA vecB
+    -> dataType
+vecDot vecA vecB =
+    sum(zipWith(*) vecA vecB)
 
 {-
     Subtracts one vector from another.
@@ -87,11 +87,11 @@ vecSub vecA vecB =
     zipWith(-) vecA vecB
 
 {-
-    Dot product of two vectors.
+    Adds two vectors together.
 -}
-vecDot :: Floating dataType
+vecSum :: Floating dataType
     => Vector dataType
     -> Vector dataType
-    -> dataType
-vecDot vecA vecB =
-    sum(zipWith(*) vecA vecB)
+    -> Vector dataType
+vecSum vecA vecB =
+    zipWith(+) vecA vecB

@@ -1,11 +1,9 @@
 module Main where
 
-import qualified Linear
-import qualified MNIST
-import Data.Word (Word8)
+import qualified ActFuncs
+import qualified Layer
 
 main :: IO ()
 main = do
-    loadedData <- MNIST.loadTrainData "_datasets/MNIST"
-    let (trainImages, trainLabels) = loadedData
-    MNIST.displayData trainImages trainLabels 12
+    let exampleDenseLayer = Layer.init 3 2 ActFuncs.sigmoid :: Layer.DenseLayer
+    putStrLn "Hello, Haskell!"
