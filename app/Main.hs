@@ -10,17 +10,11 @@ main = do
 
     -- Get seeds.
     s1 <- Common.getSeed
-    s2 <- Common.getSeed
-    s3 <- Common.getSeed
-    s4 <- Common.getSeed
 
     -- This does not do anything yet. Conceptual structure of network so far.
-    let inputLayer = L.initialize 784 16 AF.sigmoid s1 :: LT.DenseLayer
-    let hidden0    = L.initialize 16 16  AF.sigmoid s2 :: LT.DenseLayer
-    let hidden1    = L.initialize 16 16  AF.sigmoid s3 :: LT.DenseLayer
-    let output     = L.initialize 16 10  AF.sigmoid s4 :: LT.DenseLayer
+    let inputLayer = L.initialize 3 2 AF.sigmoid s1 :: LT.DenseLayer
 
-    -- Print for fun to see where we're at.
-    putStrLn "Hello, Haskell!"
-    print $ LT.weights hidden0
-    print $ LT.weights hidden1
+    let nextActivation = L.forwardProp inputLayer [1, 2, 3]
+
+    print $ LT.weights inputLayer
+    print nextActivation
