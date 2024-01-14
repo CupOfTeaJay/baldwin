@@ -1,7 +1,7 @@
 {-
     ActFuncs.hs
 
-    TODO: document.
+    This module defines activation functions for use in neural networks.
 -}
 
 module ActFuncs where

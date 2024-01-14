@@ -24,20 +24,21 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules:  Linear
-                      ActFuncs
+    exposed-modules:  ActFuncs
                       Layer
-                      MNIST
-                      Neural
+                      LayerTypes
+                      Common
 
     -- Modules included in this library but not exported.
-    -- other-modules:
+    other-modules:  Linear
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
 
     build-depends:    base ^>=4.17.2.0,
                       bytestring,
+                      random,
+                      MonadRandom,
                       split,
     hs-source-dirs:   src
     default-language: Haskell2010

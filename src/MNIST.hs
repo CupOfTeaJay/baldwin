@@ -122,7 +122,8 @@ loadTestData filepath = do
     Converts a pixel value (0-255) to a character. This can be used to crudely
     display the images to confirm the data has been loaded correctly.
 -}
-pixelToChar :: Word8 -> Char
+pixelToChar :: Word8 
+    -> Char
 pixelToChar pixel
     | pixel == 0 = ' '
     | otherwise  = '*'
