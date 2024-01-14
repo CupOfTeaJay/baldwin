@@ -6,6 +6,13 @@ import qualified Control.Monad.Random as MRand
 import qualified System.Random as Rand
 import qualified Linear
 
+getSeed :: IO Int
+getSeed = do
+    gen <- Rand.getStdGen
+    let (seed, newGen) = Rand.random gen
+    Rand.setStdGen newGen
+    return seed
+
 randVec :: Int
     -> Int
     -> Linear.Vector Float
