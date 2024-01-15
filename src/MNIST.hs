@@ -17,7 +17,7 @@ module MNIST (loadTrainData,
 import qualified Data.List.Split as SPL
 import qualified Data.ByteString as BS
 import Data.Word (Word8)
-import Linear
+import qualified Linear
 
 {-
     Header size for MNIST image data in bytes.
@@ -36,6 +36,12 @@ imageWidth = 28
 -}
 labelHeaderSize :: Int
 labelHeaderSize = 8
+
+{-
+    Number of output features for MNIST data (0-9).
+-}
+numOutputFeatures :: Word8
+numOutputFeatures = 10
 
 {-
     Total number of pixels in an MNIST image.
@@ -75,7 +81,7 @@ trainLabelsFile =
     Roughly displays an MNIST image with its corresponding label.
 -}
 displayData :: Linear.Matrix Word8
-    -> Linear.Vector Word8
+    -> Linear.Matrix Word8
     -> Int
     -> IO ()
 displayData imageData labelData index = do
@@ -93,16 +99,26 @@ formatImageData vec =
     SPL.chunksOf pixelsPerImage vec
 
 {-
+    Splits the raw label data (a list of bytes) into a list of lists. Each
+    element of the resulting data structure is a list of 10 bytes. These are our
+    one-hot encoded labels.
+-}
+formatLabelData :: Linear.Vector Word8
+    -> Linear.Matrix Word8
+formatLabelData vec =
+    map (\x -> oneHotEncode numOutputFeatures $ x) vec
+
+{-
     Reads the training data from baldwin/_datasets/MNIST and returns a tuple
     containing the training images and their corresponding labels.
 -}
 loadTrainData :: String
-    -> IO (Linear.Matrix Word8, Linear.Vector Word8)
+    -> IO (Linear.Matrix Word8, Linear.Matrix Word8)
 loadTrainData filepath = do
     rawImages <- BS.readFile (filepath ++ trainImagesFile)
     rawLabels <- BS.readFile (filepath ++ trainLabelsFile)
     let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
-    let hexLabels = BS.unpack(BS.drop labelHeaderSize rawLabels)
+    let hexLabels = formatLabelData $ BS.unpack(BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
 
 {-
@@ -110,13 +126,24 @@ loadTrainData filepath = do
     containing the test images and their corresponding labels.
 -}
 loadTestData :: String
-    -> IO (Linear.Matrix Word8, Linear.Vector Word8)
+    -> IO (Linear.Matrix Word8, Linear.Matrix Word8)
 loadTestData filepath = do
     rawImages <- BS.readFile (filepath ++ testImagesFile)
     rawLabels <- BS.readFile (filepath ++ testLabelsFile)
     let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
-    let hexLabels = BS.unpack(BS.drop labelHeaderSize rawLabels)
+    let hexLabels = formatLabelData $ BS.unpack(BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
+
+{-
+    Converts a Word8 to a one-hot vector, for use in formatting the raw MNIST 
+    label data.
+-}
+oneHotEncode :: Word8
+    -> Word8
+    -> Linear.Vector Word8
+oneHotEncode size index
+    | (index < 0) || (index >= size) = error "Error: Index out of bounds."
+    | otherwise                      = map (\x -> if x == index then 1 else 0) [0..size-1]
 
 {-
     Converts a pixel value (0-255) to a character. This can be used to crudely

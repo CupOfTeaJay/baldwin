@@ -1,20 +1,18 @@
 module Main where
 
-import qualified Layer as L
-import qualified ActFuncs as AF
-import qualified LayerTypes as LT
-import qualified Common
+import qualified MNIST
 
 main :: IO ()
 main = do
 
-    -- Get seeds.
-    s1 <- Common.getSeed
+    let pathToData = "_datasets/MNIST"
 
-    -- This does not do anything yet. Conceptual structure of network so far.
-    let inputLayer = L.initialize 3 2 AF.sigmoid s1 :: LT.DenseLayer
+    putStrLn "Loading MNIST training data..."
+    loadedTrainData <- MNIST.loadTrainData pathToData
+    let (trainImages, trainLabels) = loadedTrainData
 
-    let nextActivation = L.forwardProp inputLayer [1, 2, 3]
+    putStrLn "Loading MNIST test data..."
+    loadedTestData <- MNIST.loadTestData pathToData
+    let (testImages, testLabels) = loadedTestData
 
-    print $ LT.weights inputLayer
-    print nextActivation
+    MNIST.displayData testImages testLabels 22
