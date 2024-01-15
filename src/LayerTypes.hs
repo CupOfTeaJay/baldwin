@@ -31,7 +31,7 @@ data DenseLayer = DenseLayer {weights :: Linear.Matrix Float, -- Weights matrix 
                               actFunc :: Float -> Float}      -- Activation function for this layer.
 instance Layer.Layer DenseLayer where
     initialize ingress egress activation seed =
-        DenseLayer {weights = Common.randMat egress ingress seed,
+        DenseLayer {weights = Linear.randMat egress ingress seed,
                     biases  = replicate egress 0,
                     actFunc = activation}
     forwardProp (DenseLayer weights biases actFunc) ingress =

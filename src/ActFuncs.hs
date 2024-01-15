@@ -6,12 +6,10 @@
 
 module ActFuncs where
 
-import qualified Linear
-
 {-
     TODO: document.
 -}
-binaryStep :: (Floating dataType, Ord dataType)
+binaryStep :: (Num dataType, Ord dataType)
     => dataType
     -> dataType
 binaryStep x
@@ -21,7 +19,7 @@ binaryStep x
 {-
     TODO: document.
 -}
-sigmoid :: Floating dataType
+sigmoid :: (Num dataType, Floating dataType)
     => dataType
     -> dataType
 sigmoid x = 
@@ -30,7 +28,7 @@ sigmoid x =
 {-
     TODO: document.
 -}
-gaussian :: Floating dataType
+gaussian :: (Num dataType, Floating dataType)
     => dataType
     -> dataType
 gaussian x =
