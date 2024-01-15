@@ -18,7 +18,7 @@ import qualified Layer
 zed :: Linear.Vector Float -- Activation of previous layer.
     -> Linear.Matrix Float -- Weights for current layer.
     -> Linear.Vector Float -- Biases for current layer.
-    -> Linear.Vector Float -- Activation of current layer.
+    -> Linear.Vector Float -- "Raw" activation of current layer.
 zed ingress weights biases =
     Linear.vecSum (Linear.matVecMul weights ingress) biases
 
@@ -26,13 +26,18 @@ zed ingress weights biases =
     A Dense Layer. Neurons in a layer of this type are connected to every
     ingress feature.
 -}
-data DenseLayer = DenseLayer {weights :: Linear.Matrix Float, -- Weights matrix for this layer.
-                              biases  :: Linear.Vector Float, -- Biases vector for this layer.
-                              actFunc :: Float -> Float}      -- Activation function for this layer.
+data DenseLayer = DenseLayer {weights :: Linear.Matrix Float,
+                              biases  :: Linear.Vector Float,
+                              actFunc :: Float -> Float,
+                              preds   :: Linear.Vector Float}
 instance Layer.Layer DenseLayer where
-    initialize ingress egress activation seed =
+    init ingress egress function seed =
         DenseLayer {weights = Linear.randMat egress ingress seed,
                     biases  = replicate egress 0,
-                    actFunc = activation}
-    forwardProp (DenseLayer weights biases actFunc) ingress =
-        map actFunc (zed ingress weights biases)
+                    actFunc = function,
+                    preds   = replicate egress 0}
+    activate ingress layer =
+        DenseLayer {weights = weights layer,
+                    biases  = biases layer,
+                    actFunc = actFunc layer,
+                    preds   = map (actFunc layer) $ zed ingress (weights layer) (biases layer)}

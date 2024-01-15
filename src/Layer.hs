@@ -12,11 +12,11 @@ import qualified Linear
     TODO: document.
 -}
 class Layer layer where
-    initialize :: Int
+    init :: Int
         -> Int
         -> (Float -> Float)
         -> Int
         -> layer
-    forwardProp :: layer
-        -> Linear.Vector Float
-        -> Linear.Vector Float
+    activate :: Linear.Vector Float
+        -> layer
+        -> layer
