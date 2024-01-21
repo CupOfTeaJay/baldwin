@@ -10,14 +10,14 @@
     < https://www.kaggle.com/datasets/hojjatk/mnist-dataset >
 -}
 
-module MNIST (loadTrainData, 
+module MNIST (displayData,
               loadTestData, 
-              displayData) where
+              loadTrainData) where
 
-import qualified Data.List.Split as SPL
-import qualified Data.ByteString as BS
-import qualified Linear
 import Common
+import qualified Data.ByteString as BS
+import qualified Data.List.Split as SPL
+import qualified Linear
 
 {-
     Header size for MNIST image data in bytes.
@@ -57,18 +57,18 @@ testImagesFile =
     "/t10k-images-idx3-ubyte"
 
 {-
-    Filename for MNIST training image data.
--}
-trainImagesFile :: String
-trainImagesFile =
-    "/train-images-idx3-ubyte"
-
-{-
     Filename for MNIST test label data.
 -}
 testLabelsFile :: String
 testLabelsFile =
     "/t10k-labels-idx1-ubyte"
+
+{-
+    Filename for MNIST training image data.
+-}
+trainImagesFile :: String
+trainImagesFile =
+    "/train-images-idx3-ubyte"
 
 {-
     Filename for MNIST training label data.
@@ -80,10 +80,11 @@ trainLabelsFile =
 {-
     Roughly displays an MNIST image with its corresponding label.
 -}
-displayData :: Linear.Matrix Uint8
-    -> Linear.Matrix Uint8
-    -> Int
-    -> IO ()
+displayData :: 
+    Linear.Matrix Uint8 ->
+    Linear.Matrix Uint8 ->
+    Int ->
+    IO ()
 displayData imageData labelData index = do
     putStrLn $ "Label: " ++ show (labelData!!index)
     mapM_ putStrLn $ SPL.chunksOf imageWidth (map pixelToChar (imageData!!index))
@@ -93,8 +94,9 @@ displayData imageData labelData index = do
     element of the resulting data structure is a list of 28x28 = 784 bytes.
     These are our images.
 -}
-formatImageData :: Linear.Vector Uint8
-    -> Linear.Matrix Uint8
+formatImageData :: 
+    Linear.Vector Uint8 ->
+    Linear.Matrix Uint8
 formatImageData vec =
     SPL.chunksOf pixelsPerImage vec
 
@@ -103,30 +105,19 @@ formatImageData vec =
     element of the resulting data structure is a list of 10 bytes. These are our
     one-hot encoded labels.
 -}
-formatLabelData :: Linear.Vector Uint8
-    -> Linear.Matrix Uint8
+formatLabelData :: 
+    Linear.Vector Uint8 ->
+    Linear.Matrix Uint8
 formatLabelData vec =
     map (\x -> oneHotEncode (fromIntegral numOutputFeatures) $ x) vec
-
-{-
-    Reads the training data from baldwin/_datasets/MNIST and returns a tuple
-    containing the training images and their corresponding labels.
--}
-loadTrainData :: String
-    -> IO (Linear.Matrix Uint8, Linear.Matrix Uint8)
-loadTrainData filepath = do
-    rawImages <- BS.readFile (filepath ++ trainImagesFile)
-    rawLabels <- BS.readFile (filepath ++ trainLabelsFile)
-    let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
-    let hexLabels = formatLabelData $ BS.unpack(BS.drop labelHeaderSize rawLabels)
-    return (hexImages, hexLabels)
 
 {-
     Reads the test data from baldwin/_datasets/MNIST and returns a tuple
     containing the test images and their corresponding labels.
 -}
-loadTestData :: String
-    -> IO (Linear.Matrix Uint8, Linear.Matrix Uint8)
+loadTestData :: 
+    String ->
+    IO (Linear.Matrix Uint8, Linear.Matrix Uint8)
 loadTestData filepath = do
     rawImages <- BS.readFile (filepath ++ testImagesFile)
     rawLabels <- BS.readFile (filepath ++ testLabelsFile)
@@ -135,12 +126,27 @@ loadTestData filepath = do
     return (hexImages, hexLabels)
 
 {-
+    Reads the training data from baldwin/_datasets/MNIST and returns a tuple
+    containing the training images and their corresponding labels.
+-}
+loadTrainData :: 
+    String ->
+    IO (Linear.Matrix Uint8, Linear.Matrix Uint8)
+loadTrainData filepath = do
+    rawImages <- BS.readFile (filepath ++ trainImagesFile)
+    rawLabels <- BS.readFile (filepath ++ trainLabelsFile)
+    let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
+    let hexLabels = formatLabelData $ BS.unpack(BS.drop labelHeaderSize rawLabels)
+    return (hexImages, hexLabels)
+
+{-
     Converts a Uint8 to a one-hot vector, for use in formatting the raw MNIST 
     label data.
 -}
-oneHotEncode :: Uint8
-    -> Uint8
-    -> Linear.Vector Uint8
+oneHotEncode :: 
+    Uint8 ->
+    Uint8 ->
+    Linear.Vector Uint8
 oneHotEncode size index
     | (index < 0) || (index >= size) = error "Error: Index out of bounds."
     | otherwise                      = map (\x -> if x == index then 1 else 0) [0..size-1]
@@ -149,8 +155,9 @@ oneHotEncode size index
     Converts a pixel value (0-255) to a character. This can be used to crudely
     display the images to confirm the data has been loaded correctly.
 -}
-pixelToChar :: Uint8 
-    -> Char
+pixelToChar :: 
+    Uint8 ->
+    Char
 pixelToChar pixel
     | pixel == 0 = ' '
     | otherwise  = '*'

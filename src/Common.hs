@@ -6,9 +6,9 @@
 
 module Common where
 
-import qualified System.Random as Rand
-import qualified Data.Word as Word
 import qualified Data.Int as Int
+import qualified Data.Word as Word
+import qualified System.Random as Rand
 
 type Uint8  = Word.Word8
 type Uint16 = Word.Word16

@@ -23,99 +23,109 @@ type Matrix dataType = [Vector dataType]
 {-
     Multiplies two matrices together.
 -}
-matMul :: Num dataType
-    => Matrix dataType
-    -> Matrix dataType
-    -> Matrix dataType
+matMul ::
+  (Num dataType) =>
+  Matrix dataType ->
+  Matrix dataType ->
+  Matrix dataType
 matMul matA matB =
-    map(\row -> map(\col -> sum(zipWith(*) row col)) (matTrans matB)) matA
+  map (\row -> map (\col -> sum (zipWith (*) row col)) (matTrans matB)) matA
 
 {-
     Multiplies a matrix by a scalar.
 -}
-matScale :: Num dataType
-    =>        dataType
-    -> Matrix dataType
-    -> Matrix dataType
+matScale ::
+  (Num dataType) =>
+  dataType ->
+  Matrix dataType ->
+  Matrix dataType
 matScale scalar mat =
-    map(map(scalar*)) mat
+  map (map (scalar *)) mat
 
 {-
     Adds two matrices together.
 -}
-matSum :: Num dataType
-    => Matrix dataType
-    -> Matrix dataType
-    -> Matrix dataType
+matSum ::
+  (Num dataType) =>
+  Matrix dataType ->
+  Matrix dataType ->
+  Matrix dataType
 matSum matA matB =
-    zipWith(zipWith(+)) matA matB
+  zipWith (zipWith (+)) matA matB
 
 {-
     Transposes a matrix.
 -}
-matTrans :: Num dataType
-    => Matrix dataType
-    -> Matrix dataType
-matTrans mat = 
-    foldr(zipWith(:)) (repeat []) mat
+matTrans ::
+  (Num dataType) =>
+  Matrix dataType ->
+  Matrix dataType
+matTrans mat =
+  foldr (zipWith (:)) (repeat []) mat
 
 {-
     Multiplies a matrix by a vector.
 -}
-matVecMul :: Num dataType
-    => Matrix dataType
-    -> Vector dataType
-    -> Vector dataType
+matVecMul ::
+  (Num dataType) =>
+  Matrix dataType ->
+  Vector dataType ->
+  Vector dataType
 matVecMul mat vec =
-    map(\row -> sum(zipWith(*) row vec)) mat
+  map (\row -> sum (zipWith (*) row vec)) mat
 
 {-
     TODO: document.
 -}
-randMat :: (Num dataType, Rand.Random dataType)
-    => Int
-    -> Int
-    -> Int
-    -> Linear.Matrix dataType
+randMat ::
+  (Num dataType, Rand.Random dataType) =>
+  Int ->
+  Int ->
+  Int ->
+  Linear.Matrix dataType
 randMat rows cols seed =
-    MRand.evalRand (MRand.replicateM rows $ MRand.replicateM cols MRand.getRandom) (Rand.mkStdGen seed)
+  MRand.evalRand (MRand.replicateM rows $ MRand.replicateM cols MRand.getRandom) (Rand.mkStdGen seed)
 
 {-
     TODO: document.
 -}
-randVec :: (Num dataType, Rand.Random dataType)
-    => Int
-    -> Int
-    -> Linear.Vector dataType
+randVec ::
+  (Num dataType, Rand.Random dataType) =>
+  Int ->
+  Int ->
+  Linear.Vector dataType
 randVec size seed =
-    MRand.evalRand (MRand.replicateM size MRand.getRandom) (Rand.mkStdGen seed)
+  MRand.evalRand (MRand.replicateM size MRand.getRandom) (Rand.mkStdGen seed)
 
 {-
     Dot product of two vectors.
 -}
-vecDot :: Num dataType
-    => Vector dataType
-    -> Vector dataType
-    -> dataType
+vecDot ::
+  (Num dataType) =>
+  Vector dataType ->
+  Vector dataType ->
+  dataType
 vecDot vecA vecB =
-    sum(zipWith(*) vecA vecB)
+  sum (zipWith (*) vecA vecB)
 
 {-
     Subtracts one vector from another.
 -}
-vecSub :: Num dataType
-    => Vector dataType
-    -> Vector dataType
-    -> Vector dataType
+vecSub ::
+  (Num dataType) =>
+  Vector dataType ->
+  Vector dataType ->
+  Vector dataType
 vecSub vecA vecB =
-    zipWith(-) vecA vecB
+  zipWith (-) vecA vecB
 
 {-
     Adds two vectors together.
 -}
-vecSum :: Num dataType
-    => Vector dataType
-    -> Vector dataType
-    -> Vector dataType
+vecSum ::
+  (Num dataType) =>
+  Vector dataType ->
+  Vector dataType ->
+  Vector dataType
 vecSum vecA vecB =
-    zipWith(+) vecA vecB
+  zipWith (+) vecA vecB
