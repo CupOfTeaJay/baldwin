@@ -97,6 +97,15 @@ randVec ::
 randVec size seed =
   MRand.evalRand (MRand.replicateM size MRand.getRandom) (Rand.mkStdGen seed)
 
+translateMat ::
+    (Num dataType) =>
+    Matrix dataType ->
+    dataType ->
+    dataType ->
+    Matrix dataType
+translateMat mat scale shift =
+    map (map (\x -> scale * x + shift)) mat
+
 {-
     Dot product of two vectors.
 -}

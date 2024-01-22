@@ -81,13 +81,13 @@ trainLabelsFile =
     Roughly displays an MNIST image with its corresponding label.
 -}
 displayData :: 
-    Linear.Matrix Uint8 ->
-    Linear.Matrix Uint8 ->
+    Linear.Matrix Double ->
+    Linear.Matrix Double ->
     Int ->
     IO ()
 displayData imageData labelData index = do
-    putStrLn $ "Label: " ++ show (labelData!!index)
-    mapM_ putStrLn $ SPL.chunksOf imageWidth (map pixelToChar (imageData!!index))
+    putStrLn $ "Label: " ++ show (labelData !! index)
+    mapM_ putStrLn $ SPL.chunksOf imageWidth (map pixelToChar (imageData !! index))
 
 {-
     Splits the raw image data (a list of bytes) into a list of lists. Each
@@ -96,9 +96,9 @@ displayData imageData labelData index = do
 -}
 formatImageData :: 
     Linear.Vector Uint8 ->
-    Linear.Matrix Uint8
+    Linear.Matrix Double
 formatImageData vec =
-    SPL.chunksOf pixelsPerImage vec
+    byteToDouble $ SPL.chunksOf pixelsPerImage vec
 
 {-
     Splits the raw label data (a list of bytes) into a list of lists. Each
@@ -107,9 +107,9 @@ formatImageData vec =
 -}
 formatLabelData :: 
     Linear.Vector Uint8 ->
-    Linear.Matrix Uint8
+    Linear.Matrix Double
 formatLabelData vec =
-    map (\x -> oneHotEncode (fromIntegral numOutputFeatures) $ x) vec
+    byteToDouble $ map (\x -> oneHotEncode (fromIntegral numOutputFeatures) $ x) vec
 
 {-
     Reads the test data from baldwin/_datasets/MNIST and returns a tuple
@@ -117,12 +117,12 @@ formatLabelData vec =
 -}
 loadTestData :: 
     String ->
-    IO (Linear.Matrix Uint8, Linear.Matrix Uint8)
+    IO (Linear.Matrix Double, Linear.Matrix Double)
 loadTestData filepath = do
     rawImages <- BS.readFile (filepath ++ testImagesFile)
     rawLabels <- BS.readFile (filepath ++ testLabelsFile)
-    let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
-    let hexLabels = formatLabelData $ BS.unpack(BS.drop labelHeaderSize rawLabels)
+    let hexImages = formatImageData $ BS.unpack (BS.drop imageHeaderSize rawImages)
+    let hexLabels = formatLabelData $ BS.unpack (BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
 
 {-
@@ -131,12 +131,12 @@ loadTestData filepath = do
 -}
 loadTrainData :: 
     String ->
-    IO (Linear.Matrix Uint8, Linear.Matrix Uint8)
+    IO (Linear.Matrix Double, Linear.Matrix Double)
 loadTrainData filepath = do
     rawImages <- BS.readFile (filepath ++ trainImagesFile)
     rawLabels <- BS.readFile (filepath ++ trainLabelsFile)
-    let hexImages = formatImageData(BS.unpack(BS.drop imageHeaderSize rawImages))
-    let hexLabels = formatLabelData $ BS.unpack(BS.drop labelHeaderSize rawLabels)
+    let hexImages = formatImageData $ BS.unpack (BS.drop imageHeaderSize rawImages)
+    let hexLabels = formatLabelData $ BS.unpack (BS.drop labelHeaderSize rawLabels)
     return (hexImages, hexLabels)
 
 {-
@@ -156,8 +156,17 @@ oneHotEncode size index
     display the images to confirm the data has been loaded correctly.
 -}
 pixelToChar :: 
-    Uint8 ->
+    Double ->
     Char
 pixelToChar pixel
     | pixel == 0 = ' '
     | otherwise  = '*'
+
+{-
+    Converts a matrix of Uint8 to Double.
+-}
+byteToDouble :: 
+    Linear.Matrix Uint8 ->
+    Linear.Matrix Double
+byteToDouble mat =
+    map (map (\x -> fromIntegral x)) mat
