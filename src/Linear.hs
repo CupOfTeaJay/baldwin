@@ -97,13 +97,16 @@ randVec ::
 randVec size seed =
   MRand.evalRand (MRand.replicateM size MRand.getRandom) (Rand.mkStdGen seed)
 
-translateMat ::
+{-
+    TODO: document.
+-}
+linearTransformMat ::
     (Num dataType) =>
     Matrix dataType ->
     dataType ->
     dataType ->
     Matrix dataType
-translateMat mat scale shift =
+linearTransformMat mat scale shift =
     map (map (\x -> scale * x + shift)) mat
 
 {-

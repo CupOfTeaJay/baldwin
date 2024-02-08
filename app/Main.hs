@@ -1,3 +1,8 @@
+{-
+    TODO:
+        - "Translate" layer matrix weights during initialization so they resolve with negative values as well.
+        - Maybe rename Linear.translateMat to something more intuitive.
+-}
 module Main where
 
 import qualified ActFuncs
@@ -21,7 +26,6 @@ main = do
 
     MNIST.displayData testImages testLabels 22
 
-    -- Will this work???
     let inputLayer   = Layer.initDense 784 16 ActFuncs.sigmoid 0
     let hiddenLayer0 = Layer.initDense 16 16  ActFuncs.sigmoid 12
     let hiddenLayer1 = Layer.initDense 16 16  ActFuncs.sigmoid 39
@@ -34,5 +38,5 @@ main = do
 
     let result = Network.forwardProp (head testImages) myNetwork
 
-    putStrLn $ show (Layer.weights hiddenLayer0)
-    putStrLn $ show (Linear.translateMat (Layer.weights hiddenLayer0) (2) (-1))
+    putStrLn $ show (result)
+

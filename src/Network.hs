@@ -17,3 +17,4 @@ forwardProp ::
     Linear.Vector Double
 forwardProp ingress network =
     foldl Layer.activateLayer ingress network
+

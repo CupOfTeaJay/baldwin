@@ -58,7 +58,7 @@ initDense ::
     DenseLayer
 initDense inShape outShape func seed =
     DenseLayer {
-        weights = Linear.randMat outShape inShape seed,
+        weights = Linear.linearTransformMat (Linear.randMat outShape inShape seed) (2) (-1),
         biases  = replicate outShape 0,
         actFunc = func
     }
