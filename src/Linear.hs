@@ -13,21 +13,21 @@ import qualified System.Random as Rand
 {-
     Alias for a list, effectively a vector.
 -}
-type Vector dataType = [dataType]
+type Vector a = [a]
 
 {-
     Alias for a list of lists, effectively a matrix.
 -}
-type Matrix dataType = [Vector dataType]
+type Matrix a = [Vector a]
 
 {-
     Multiplies two matrices together.
 -}
 matMul ::
-  (Num dataType) =>
-  Matrix dataType ->
-  Matrix dataType ->
-  Matrix dataType
+  (Num a) =>
+  Matrix a ->
+  Matrix a ->
+  Matrix a
 matMul matA matB =
   map (\row -> map (\col -> sum (zipWith (*) row col)) (matTrans matB)) matA
 
@@ -35,10 +35,10 @@ matMul matA matB =
     Multiplies a matrix by a scalar.
 -}
 matScale ::
-  (Num dataType) =>
-  dataType ->
-  Matrix dataType ->
-  Matrix dataType
+  (Num a) =>
+  a ->
+  Matrix a ->
+  Matrix a
 matScale scalar mat =
   map (map (scalar *)) mat
 
@@ -46,10 +46,10 @@ matScale scalar mat =
     Adds two matrices together.
 -}
 matSum ::
-  (Num dataType) =>
-  Matrix dataType ->
-  Matrix dataType ->
-  Matrix dataType
+  (Num a) =>
+  Matrix a ->
+  Matrix a ->
+  Matrix a
 matSum matA matB =
   zipWith (zipWith (+)) matA matB
 
@@ -57,9 +57,9 @@ matSum matA matB =
     Transposes a matrix.
 -}
 matTrans ::
-  (Num dataType) =>
-  Matrix dataType ->
-  Matrix dataType
+  (Num a) =>
+  Matrix a ->
+  Matrix a
 matTrans mat =
   foldr (zipWith (:)) (repeat []) mat
 
@@ -67,10 +67,10 @@ matTrans mat =
     Multiplies a matrix by a vector.
 -}
 matVecMul ::
-  (Num dataType) =>
-  Matrix dataType ->
-  Vector dataType ->
-  Vector dataType
+  (Num a) =>
+  Matrix a ->
+  Vector a ->
+  Vector a
 matVecMul mat vec =
   map (\row -> sum (zipWith (*) row vec)) mat
 
@@ -78,11 +78,11 @@ matVecMul mat vec =
     TODO: document.
 -}
 randMat ::
-  (Num dataType, Rand.Random dataType) =>
+  (Num a, Rand.Random a) =>
   Int ->
   Int ->
   Int ->
-  Linear.Matrix dataType
+  Linear.Matrix a
 randMat rows cols seed =
   MRand.evalRand (MRand.replicateM rows $ MRand.replicateM cols MRand.getRandom) (Rand.mkStdGen seed)
 
@@ -90,7 +90,7 @@ randMat rows cols seed =
     TODO: document.
 -}
 randVec ::
-  (Num dataType, Rand.Random dataType) =>
+  (Num a, Rand.Random a) =>
   Int ->
   Int ->
   Linear.Vector dataType
@@ -101,11 +101,11 @@ randVec size seed =
     TODO: document.
 -}
 linearTransformMat ::
-    (Num dataType) =>
-    Matrix dataType ->
-    dataType ->
-    dataType ->
-    Matrix dataType
+    (Num a) =>
+    Matrix a ->
+    a ->
+    a ->
+    Matrix a
 linearTransformMat mat scale shift =
     map (map (\x -> scale * x + shift)) mat
 
@@ -113,10 +113,10 @@ linearTransformMat mat scale shift =
     Dot product of two vectors.
 -}
 vecDot ::
-  (Num dataType) =>
-  Vector dataType ->
-  Vector dataType ->
-  dataType
+  (Num a) =>
+  Vector a ->
+  Vector a ->
+  a
 vecDot vecA vecB =
   sum (zipWith (*) vecA vecB)
 
@@ -124,10 +124,10 @@ vecDot vecA vecB =
     Subtracts one vector from another.
 -}
 vecSub ::
-  (Num dataType) =>
-  Vector dataType ->
-  Vector dataType ->
-  Vector dataType
+  (Num a) =>
+  Vector a ->
+  Vector a ->
+  Vector a
 vecSub vecA vecB =
   zipWith (-) vecA vecB
 
@@ -135,9 +135,10 @@ vecSub vecA vecB =
     Adds two vectors together.
 -}
 vecSum ::
-  (Num dataType) =>
-  Vector dataType ->
-  Vector dataType ->
-  Vector dataType
+  (Num a) =>
+  Vector a ->
+  Vector a ->
+  Vector a
 vecSum vecA vecB =
   zipWith (+) vecA vecB
+

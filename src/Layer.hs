@@ -62,3 +62,4 @@ initDense inShape outShape func seed =
         biases  = replicate outShape 0,
         actFunc = func
     }
+

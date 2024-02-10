@@ -10,9 +10,9 @@ module ActFuncs where
     TODO: document.
 -}
 binaryStep :: 
-    (Num dataType, Ord dataType) =>
-    dataType ->
-    dataType
+    (Num a, Ord a) =>
+    a ->
+    a
 binaryStep x
     | x < 0     = 0
     | otherwise = 1
@@ -21,9 +21,9 @@ binaryStep x
     TODO: document.
 -}
 sigmoid :: 
-    (Num dataType, Floating dataType) =>
-    dataType ->
-    dataType
+    (Num a, Floating a) =>
+    a ->
+    a
 sigmoid x = 
     1 / (1 + exp(-x))
 
@@ -31,8 +31,9 @@ sigmoid x =
     TODO: document.
 -}
 gaussian :: 
-    (Num dataType, Floating dataType) =>
-    dataType ->
-    dataType
+    (Num a, Floating a) =>
+    a ->
+    a
 gaussian x =
     exp(-x^2)
+

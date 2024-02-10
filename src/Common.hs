@@ -26,3 +26,4 @@ getSeed = do
     let (seed, newGen) = Rand.random gen
     Rand.setStdGen newGen
     return seed
+

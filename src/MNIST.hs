@@ -170,3 +170,4 @@ byteToDouble ::
     Linear.Matrix Double
 byteToDouble mat =
     map (map (\x -> fromIntegral x)) mat
+
