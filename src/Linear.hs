@@ -93,7 +93,7 @@ randVec ::
   (Num a, Rand.Random a) =>
   Int ->
   Int ->
-  Linear.Vector dataType
+  Linear.Vector a
 randVec size seed =
   MRand.evalRand (MRand.replicateM size MRand.getRandom) (Rand.mkStdGen seed)
 
