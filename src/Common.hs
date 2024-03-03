@@ -1,7 +1,7 @@
 {-
     Common.hs
 
-    TODO: document.
+    This module defines types and functions for common use across Baldwin.
 -}
 
 module Common where

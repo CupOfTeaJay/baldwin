@@ -1,7 +1,9 @@
 {-
     TODO:
-        - "Translate" layer matrix weights during initialization so they resolve with negative values as well.
-        - Maybe rename Linear.translateMat to something more intuitive.
+    - Implement backpropogation.
+    - Refactor library to use arbitrarily sized "tensors" instead of vectors and matrices.
+    - Refactor MNIST so it and future datasets can be loaded by some generic dataLoader.
+    - Do we need linearTranslateMat? Maybe randMat can somehow gen (-1, 1).
 -}
 module Main where
 

@@ -75,7 +75,8 @@ matVecMul mat vec =
   map (\row -> sum (zipWith (*) row vec)) mat
 
 {-
-    TODO: document.
+    Produces a random matrix of dimensions rows*cols, with elements ranging
+    from (0, 1).
 -}
 randMat ::
   (Num a, Rand.Random a) =>
@@ -87,7 +88,7 @@ randMat rows cols seed =
   MRand.evalRand (MRand.replicateM rows $ MRand.replicateM cols MRand.getRandom) (Rand.mkStdGen seed)
 
 {-
-    TODO: document.
+    Produces a random vector of length size, with elements ranging from (0, 1).
 -}
 randVec ::
   (Num a, Rand.Random a) =>
@@ -98,7 +99,8 @@ randVec size seed =
   MRand.evalRand (MRand.replicateM size MRand.getRandom) (Rand.mkStdGen seed)
 
 {-
-    TODO: document.
+    Maps each element of a matrix to a new value by multiplying it by some
+    scalar and adding an offset.
 -}
 linearTransformMat ::
     (Num a) =>
