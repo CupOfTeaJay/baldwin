@@ -7,7 +7,8 @@
 module ActFuncs where
 
 {-
-    TODO: document.
+    Heavystep / Binary activation function. Returns "0" when input is
+    negative, otherwise returns "1".
 -}
 binaryStep :: 
     (Num a, Ord a) =>
@@ -18,7 +19,7 @@ binaryStep x
     | otherwise = 1
 
 {-
-    TODO: document.
+    Logistic / Sigmoid / Soft Step activation function.
 -}
 sigmoid :: 
     (Num a, Floating a) =>
@@ -28,7 +29,7 @@ sigmoid x =
     1 / (1 + exp(-x))
 
 {-
-    TODO: document.
+    Gaussian activation function.
 -}
 gaussian :: 
     (Num a, Floating a) =>
