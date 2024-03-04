@@ -24,14 +24,15 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules:  Layer,
+    exposed-modules:  Common,
+                      Layer,
                       Linear,
                       MNIST,
                       ActFuncs,
                       Network
 
     -- Modules included in this library but not exported.
-    other-modules:  Common
+    other-modules:
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:

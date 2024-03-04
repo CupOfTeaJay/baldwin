@@ -10,16 +10,25 @@ import qualified Data.Int as Int
 import qualified Data.Word as Word
 import qualified System.Random as Rand
 
+{-
+    Unsigned integers.
+-}
 type Uint8  = Word.Word8
 type Uint16 = Word.Word16
 type Uint32 = Word.Word32
 type Uint64 = Word.Word64
 
+{-
+    Signed integers.
+-}
 type Sint8  = Int.Int8
 type Sint16 = Int.Int16
 type Sint32 = Int.Int32
 type Sint64 = Int.Int64
 
+{-
+    Returns a random number from the global random number generator.
+-}
 getSeed :: IO Int
 getSeed = do
     gen <- Rand.getStdGen

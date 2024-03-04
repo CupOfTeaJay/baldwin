@@ -8,6 +8,7 @@
 module Main where
 
 import qualified ActFuncs
+import qualified Common
 import qualified Linear
 import qualified Layer
 import qualified MNIST
@@ -28,10 +29,15 @@ main = do
 
     MNIST.displayData testImages testLabels 22
 
-    let inputLayer   = Layer.initDense 784 16 ActFuncs.sigmoid 0
-    let hiddenLayer0 = Layer.initDense 16 16  ActFuncs.sigmoid 12
-    let hiddenLayer1 = Layer.initDense 16 16  ActFuncs.sigmoid 39
-    let outputLayer  = Layer.initDense 16 10  ActFuncs.sigmoid 9
+    seed0 <- Common.getSeed
+    seed1 <- Common.getSeed
+    seed2 <- Common.getSeed
+    seed3 <- Common.getSeed
+
+    let inputLayer   = Layer.initDense 784 16 ActFuncs.sigmoid seed0
+    let hiddenLayer0 = Layer.initDense 16 16  ActFuncs.sigmoid seed1
+    let hiddenLayer1 = Layer.initDense 16 16  ActFuncs.sigmoid seed2
+    let outputLayer  = Layer.initDense 16 10  ActFuncs.sigmoid seed3
 
     let myNetwork = [Layer.Dense inputLayer, 
                      Layer.Dense hiddenLayer0, 
